@@ -75,6 +75,7 @@ class DiffEqFlow(Flow):
         kwargs = {**self._kwargs, **kwargs}
         if not self._use_checkpoints:
             from torchdiffeq import odeint_adjoint
+            #state = torch.cat(state, dim=-1)
             *ys, dlogp = odeint_adjoint(
                 dynamics,
                 state,

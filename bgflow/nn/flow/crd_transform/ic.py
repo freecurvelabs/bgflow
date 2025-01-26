@@ -87,7 +87,11 @@ def decompose_z_matrix(z_matrix, fixed):
 
     index2atom = np.concatenate(atoms)
     atom2index = np.argsort(index2atom)
-    index2order = np.concatenate(order)
+    if( len(order) > 0 ):
+        index2order = np.concatenate(order)
+    else:
+        index2order = np.empty(0)
+    
     return blocks, index2atom, atom2index, index2order
 
 

@@ -223,8 +223,8 @@ class FlowMatchingTrainer(object):
         assert not (self.optimal_transport and self.equivariant_optimal_transport), \
             "Choose either OT flow matching or equivariant OT flow matching (not both)."
         loss_names.append("FM")
+        self.test_loss = test_loss
         if test_loss:
-            self.test_loss = test_loss
             loss_names.append("FM(Test)")
         self.reporter = LossReporter(*loss_names)
 
@@ -259,7 +259,7 @@ class FlowMatchingTrainer(object):
         # target vectorfield
         ut = x1 - x0
         vt = self.bg.flow._dynamics._dynamics._dynamics_function(t, x)
-        loss = torch.mean((vt - ut) ** 2)                  
+        loss = torch.mean((vt - ut) ** 2)  * 10000               
         return loss
     
     def train(

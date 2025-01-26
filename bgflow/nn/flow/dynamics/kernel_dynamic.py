@@ -114,3 +114,8 @@ class KernelDynamics(torch.nn.Module):
             return forces, -divergence
         else:
             return forces
+            
+    def _dynamics_function(self, t, x ):
+        t_loc = t[0]
+        forces = self.forward(t_loc, x, compute_divergence=False)
+        return forces

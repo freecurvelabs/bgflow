@@ -88,7 +88,7 @@ class ShapeDictionary(OrderedDict):
             shape_info[BONDS] = (coordinate_transform.dim_bonds - n_constraints,)
         if coordinate_transform.dim_angles > 0:
             shape_info[ANGLES] = (coordinate_transform.dim_angles,)
-        if coordinate_transform.dim_torsions > 0:
+        if coordinate_transform.dim_torsions >= 0:
             shape_info[TORSIONS] = (coordinate_transform.dim_torsions,)
         if coordinate_transform.dim_fixed > 0:
             shape_info[FIXED] = (coordinate_transform.dim_fixed,)

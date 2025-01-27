@@ -73,7 +73,8 @@ class EGNN_dynamics_AD2_cat(nn.Module):
         vel = remove_mean(vel, self._n_particles, 3)
         #print(t, xs)
         self.counter += 1
-        return vel.view(n_batch,  self._n_particles* self._n_dimension)
+        divergence = torch.zeros(n_batch, 1).to(xs)
+        return vel.view(n_batch,  self._n_particles* self._n_dimension),divergence
 
     def _create_edges(self):
         rows, cols = [], []

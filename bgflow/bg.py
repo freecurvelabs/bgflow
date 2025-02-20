@@ -14,12 +14,20 @@ def unnormalized_kl_div(prior, flow, target, n_samples, temperature=1.0):
     z = prior.sample(n_samples, temperature=temperature)
     z = pack_tensor_in_tuple(z)
     *x, dlogp = flow(*z, temperature=temperature)
-    return target.energy(*x, temperature=temperature) - dlogp
+    energy = target.energy(*x, temperature=temperature)
+    
+    #print(f"unnormalized_kl_div(): target_energy = {energy.mean().item()}  dlogp= {dlogp.mean().item()} ") 
+    #return target.energy(*x, temperature=temperature) - dlogp
+    return energy - dlogp
 
 
 def unormalized_nll(prior, flow, *x, temperature=1.0):
     *z, neg_dlogp = flow(*x, inverse=True, temperature=temperature)
-    return prior.energy(*z, temperature=temperature) - neg_dlogp
+    energy = prior.energy(*z, temperature=temperature)
+    
+    #print(f"unormalized_nll(): prior_energy = {energy.mean().item()}  neg_dlogp= {neg_dlogp.mean().item()} ") 
+    #return prior.energy(*z, temperature=temperature) - neg_dlogp
+    return energy - neg_dlogp
 
 
 def log_weights(*x, prior, flow, target, temperature=1.0, normalize=True):
